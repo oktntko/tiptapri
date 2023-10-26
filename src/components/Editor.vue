@@ -15,10 +15,13 @@ import StarterKit from '@tiptap/starter-kit';
 import { BubbleMenu, useEditor, EditorContent } from '@tiptap/vue-3';
 // TODO: import EditorShortcutKeysHelp from './EditorShortcutKeysHelp.vue';
 
-const props = defineProps<{
-  modelValue: string;
-  editable: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    modelValue: string;
+    editable?: boolean;
+  }>(),
+  { editable: false },
+);
 
 const emit = defineEmits<{
   'update:modelValue': [value: string];
