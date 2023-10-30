@@ -1,4 +1,5 @@
 import App from './App.vue';
+import './plugin/log';
 import router from './middleware/router';
 import './styles.css';
 
