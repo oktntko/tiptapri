@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { open, ask, save } from '@tauri-apps/api/dialog';
-import { exists, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+import { readTextFile, writeTextFile } from '@tauri-apps/api/fs';
 import { basename, dirname } from '@tauri-apps/api/path';
+import store, { RecentlyOpenedFile } from '../tauri-plugin/store';
 
 // TODO: tauri の dialog が YES/NO しか選べない
 // 保存なら ①保存する②保存しない③(操作を)やめる の３つほしい
@@ -17,6 +18,11 @@ type TiptapFile = {
 
 const fileList = ref<TiptapFile[]>([]);
 const current = ref<TiptapFile>();
+const recentlyOpenedFileList = ref<RecentlyOpenedFile[]>([]);
+
+onMounted(async () => {
+  recentlyOpenedFileList.value = await store.getRecentlyOpenedFileList();
+});
 
 window.addEventListener('keydown', async (e) => {
   if (current.value && e.ctrlKey && e.code == 'KeyS') {
@@ -48,33 +54,41 @@ async function saveFile(file: TiptapFile) {
 
   await writeTextFile(file.fullpath, file.contents);
   file.originalContents = file.contents;
+  recentlyOpenedFileList.value = await store.saveRecentlyOpenedFileList(file);
 }
 
 async function openFile() {
   const fullpath = await open({ multiple: false });
-  if (
-    typeof fullpath === 'string' &&
-    fileList.value.every((x) => x.fullpath !== fullpath) &&
-    (await exists(fullpath))
-  ) {
-    const [_dirname, _basename, _contents] = await Promise.all([
-      dirname(fullpath),
-      basename(fullpath),
-      readTextFile(fullpath),
-    ]);
-
-    const file: TiptapFile = {
-      fullpath,
-      dirname: _dirname,
-      basename: _basename,
-      contents: _contents,
-      originalContents: _contents,
-      isNew: false,
-    };
-
-    fileList.value.push(file);
-    current.value = file;
+  if (typeof fullpath === 'string') {
+    await readFile(fullpath);
   }
+}
+
+async function readFile(fullpath: string) {
+  const file =
+    fileList.value.find((x) => x.fullpath === fullpath) ??
+    (await (async function () {
+      const [_dirname, _basename, _contents] = await Promise.all([
+        dirname(fullpath),
+        basename(fullpath),
+        readTextFile(fullpath),
+      ]);
+
+      const file: TiptapFile = {
+        fullpath,
+        dirname: _dirname,
+        basename: _basename,
+        contents: _contents,
+        originalContents: _contents,
+        isNew: false,
+      };
+
+      fileList.value.push(file);
+      return file;
+    })());
+
+  current.value = file;
+  recentlyOpenedFileList.value = await store.saveRecentlyOpenedFileList(file);
 }
 
 function addFile() {
@@ -129,7 +143,7 @@ async function closeFile(file: TiptapFile) {
 
     <!-- サイドメニュー フォルダ -->
     <aside class="flex h-screen shrink-0 flex-col overflow-hidden bg-gray-50" :class="['w-80']">
-      <header class="flex items-center justify-between p-2 uppercase">
+      <header class="flex items-center justify-between bg-gray-300 p-2 uppercase">
         explorer
 
         <div role="menu" class="flex justify-center gap-2">
@@ -154,12 +168,35 @@ async function closeFile(file: TiptapFile) {
           </button>
         </div>
       </header>
-      <hr />
-      <div>開いているフォルダ</div>
-      <hr />
-      <div>お気に入り</div>
-      <hr />
-      <div>最近開いたファイル</div>
+      <!-- TODO: <div>開いているフォルダ</div> -->
+      <!-- TODO: <div>お気に入り</div> -->
+
+      <ul class="flex flex-col flex-nowrap divide-y">
+        <header class="flex items-center gap-0.5 bg-gray-100 p-2">
+          <Icon icon="mdi:recent" class="h-6 w-6"></Icon>
+          Recently Opened File
+        </header>
+        <li v-for="file of recentlyOpenedFileList" :key="file.fullpath" class="cursor-pointer">
+          <a
+            class="flex items-center justify-between px-2 py-1 hover:bg-gray-100"
+            :title="file.fullpath"
+            @click="readFile(file.fullpath)"
+          >
+            <span> {{ file.basename }}</span>
+            <button
+              @click.stop="
+                async () => {
+                  recentlyOpenedFileList = await store.removeRecentlyOpenedFileList(file);
+                }
+              "
+              type="button"
+              class="rounded p-1 hover:bg-gray-200"
+            >
+              <Icon icon="twemoji:multiply"></Icon>
+            </button>
+          </a>
+        </li>
+      </ul>
     </aside>
 
     <div class="flex h-screen grow flex-col">

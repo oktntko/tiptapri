@@ -1,7 +1,8 @@
 import App from './App.vue';
-import './plugin/log';
 import router from './middleware/router';
 import './styles.css';
+import './tauri-plugin/log';
+import './tauri-plugin/store';
 
 const app = createApp(App);
 

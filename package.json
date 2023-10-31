@@ -28,6 +28,7 @@
     "@tiptap/vue-3": "2.1.12",
     "pinia": "^2.1.7",
     "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log",
+    "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
   },

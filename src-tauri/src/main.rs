@@ -35,11 +35,18 @@ fn main() {
             }
             Ok(())
         })
+        // https://github.com/tauri-apps/tauri-plugin-log#usage
+        // https://aptabase.com/blog/complete-guide-tauri-log
         .plugin(
             tauri_plugin_log::Builder::default()
                 .targets(LOG_TARGETS)
                 .build(),
-        ) // <-- this line here
+        )
+        // https://github.com/tauri-apps/tauri-plugin-store#usage
+        // https://aptabase.com/blog/persistent-state-tauri-apps
+        .plugin(tauri_plugin_store::Builder::default().build())
+        // https://github.com/tauri-apps/plugins-workspace/tree/v1/plugins/persisted-scope
+        .plugin(tauri_plugin_persisted_scope::init())
         .menu(menu)
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
