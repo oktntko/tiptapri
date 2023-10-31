@@ -113,346 +113,339 @@ function addImage() {
 <template>
   <div class="editor">
     <!-- ヘッダー -->
-    <div
+    <header
       v-if="editor && editable"
       role="menu"
-      class="peer flex appearance-none flex-col border border-b-0 border-gray-300 bg-white"
+      class="peer sticky top-0 z-10 flex h-12 border-separate appearance-none flex-wrap divide-x border-b border-b-gray-300 bg-gray-50"
     >
-      <div class="flex flex-wrap divide-x">
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Heading"
-              class="m-1 flex items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
-              @click="show.Heading = !show.Heading"
-            >
-              <Icon icon="ci:heading" class="m-1 h-6 w-6"></Icon>
-              <Icon
-                icon="flat-color-icons:expand"
-                class="-ml-1 h-3 w-3 pr-1"
-                :rotate="show.Heading ? 1 : 3"
-              ></Icon>
-            </button>
-          </li>
-          <li v-show="show.Heading" class="flex items-center justify-center">
-            <button
-              type="button"
-              title="H1"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Heading"
+            class="m-1 flex items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
+            @click="show.Heading = !show.Heading"
+          >
+            <Icon icon="ci:heading" class="m-1 h-6 w-6"></Icon>
+            <Icon
+              icon="flat-color-icons:expand"
+              class="-ml-1 h-3 w-3 pr-1"
+              :rotate="show.Heading ? 1 : 3"
+            ></Icon>
+          </button>
+        </li>
+        <li v-show="show.Heading" class="flex items-center justify-center">
+          <button
+            type="button"
+            title="H1"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                   ${editor.isActive('heading', { level: 1 }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-            >
-              <Icon icon="ci:heading-h1" class="m-1 h-6 w-6"></Icon>
-            </button>
-            <button
-              type="button"
-              title="H2"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+          >
+            <Icon icon="ci:heading-h1" class="m-1 h-6 w-6"></Icon>
+          </button>
+          <button
+            type="button"
+            title="H2"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                   ${editor.isActive('heading', { level: 2 }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-            >
-              <Icon icon="ci:heading-h2" class="m-1 h-[1.4rem] w-[1.4rem]"></Icon>
-            </button>
-            <button
-              type="button"
-              title="H3"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+          >
+            <Icon icon="ci:heading-h2" class="m-1 h-[1.4rem] w-[1.4rem]"></Icon>
+          </button>
+          <button
+            type="button"
+            title="H3"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                   ${editor.isActive('heading', { level: 3 }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-            >
-              <Icon icon="ci:heading-h3" class="m-1 h-5 w-5"></Icon>
-            </button>
-            <button
-              type="button"
-              title="H4"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+          >
+            <Icon icon="ci:heading-h3" class="m-1 h-5 w-5"></Icon>
+          </button>
+          <button
+            type="button"
+            title="H4"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                   ${editor.isActive('heading', { level: 4 }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-            >
-              <Icon icon="ci:heading-h4" class="m-1 h-[1.1rem] w-[1.1rem]"></Icon>
-            </button>
-            <button
-              type="button"
-              title="H5"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+          >
+            <Icon icon="ci:heading-h4" class="m-1 h-[1.1rem] w-[1.1rem]"></Icon>
+          </button>
+          <button
+            type="button"
+            title="H5"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                   ${editor.isActive('heading', { level: 5 }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-            >
-              <Icon icon="ci:heading-h5" class="m-1 h-4 w-4"></Icon>
-            </button>
-            <button
-              type="button"
-              title="H6"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+          >
+            <Icon icon="ci:heading-h5" class="m-1 h-4 w-4"></Icon>
+          </button>
+          <button
+            type="button"
+            title="H6"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                   ${editor.isActive('heading', { level: 6 }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-            >
-              <Icon icon="ci:heading-h6" class="m-1 h-3 w-3"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <label
-              for="color"
-              title="Color"
-              class="m-1 flex cursor-pointer items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
-            >
-              <Icon
-                icon="bx:font-color"
-                class="m-1 h-6 w-6"
-                :style="{ color: editor.getAttributes('textStyle').color }"
-              ></Icon>
-            </label>
-            <input
-              id="color"
-              type="color"
-              class="m-1 cursor-pointer rounded"
-              :value="editor.getAttributes('textStyle').color"
-              @input="
-                (e) => {
-                  const target = e.target as HTMLInputElement | null;
-                  return target?.value
-                    ? editor?.chain().focus().setColor(target.value).run()
-                    : undefined;
-                }
-              "
-            />
-            <button
-              type="button"
-              title="Color Reset"
-              :class="`m-1 flex h-6 w-6 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black`"
-              @click="editor.chain().focus().unsetColor().run()"
-            >
-              <Icon icon="bx:reset" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <label
-              for="highlight"
-              title="Highlight"
-              class="m-1 flex cursor-pointer items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
-            >
-              <Icon
-                icon="bx:highlight"
-                class="m-1 h-6 w-6"
-                :style="{ color: editor.getAttributes('highlight').color }"
-              ></Icon>
-            </label>
-            <input
-              id="highlight"
-              type="color"
-              class="m-1 cursor-pointer rounded"
-              :value="editor.getAttributes('highlight').color"
-              @input="
-                (e) => {
-                  const target = e.target as HTMLInputElement | null;
-                  return target?.value
-                    ? editor?.chain().focus().toggleHighlight({ color: target.value }).run()
-                    : undefined;
-                }
-              "
-            />
-            <button
-              type="button"
-              title="Highlight Reset"
-              :class="`m-1 flex h-6 w-6 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black`"
-              @click="editor.chain().focus().unsetHighlight().run()"
-            >
-              <Icon icon="bx:reset" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="TextAlign"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
+          >
+            <Icon icon="ci:heading-h6" class="m-1 h-3 w-3"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <label
+            for="color"
+            title="Color"
+            class="m-1 flex cursor-pointer items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
+          >
+            <Icon
+              icon="bx:font-color"
+              class="m-1 h-6 w-6"
+              :style="{ color: editor.getAttributes('textStyle').color }"
+            ></Icon>
+          </label>
+          <input
+            id="color"
+            type="color"
+            class="m-1 cursor-pointer rounded"
+            :value="editor.getAttributes('textStyle').color"
+            @input="
+              (e) => {
+                const target = e.target as HTMLInputElement | null;
+                return target?.value
+                  ? editor?.chain().focus().setColor(target.value).run()
+                  : undefined;
+              }
+            "
+          />
+          <button
+            type="button"
+            title="Color Reset"
+            :class="`m-1 flex h-6 w-6 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black`"
+            @click="editor.chain().focus().unsetColor().run()"
+          >
+            <Icon icon="bx:reset" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <label
+            for="highlight"
+            title="Highlight"
+            class="m-1 flex cursor-pointer items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
+          >
+            <Icon
+              icon="bx:highlight"
+              class="m-1 h-6 w-6"
+              :style="{ color: editor.getAttributes('highlight').color }"
+            ></Icon>
+          </label>
+          <input
+            id="highlight"
+            type="color"
+            class="m-1 cursor-pointer rounded"
+            :value="editor.getAttributes('highlight').color"
+            @input="
+              (e) => {
+                const target = e.target as HTMLInputElement | null;
+                return target?.value
+                  ? editor?.chain().focus().toggleHighlight({ color: target.value }).run()
+                  : undefined;
+              }
+            "
+          />
+          <button
+            type="button"
+            title="Highlight Reset"
+            :class="`m-1 flex h-6 w-6 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black`"
+            @click="editor.chain().focus().unsetHighlight().run()"
+          >
+            <Icon icon="bx:reset" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="TextAlign"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive({ textAlign: 'left' }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().setTextAlign('left').run()"
-            >
-              <Icon icon="ci:text-align-left" class="m-1 h-6 w-6"></Icon>
-            </button>
-            <button
-              type="button"
-              title="TextAlign"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().setTextAlign('left').run()"
+          >
+            <Icon icon="ci:text-align-left" class="m-1 h-6 w-6"></Icon>
+          </button>
+          <button
+            type="button"
+            title="TextAlign"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive({ textAlign: 'center' }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().setTextAlign('center').run()"
-            >
-              <Icon icon="ci:text-align-center" class="m-1 h-6 w-6"></Icon>
-            </button>
-            <button
-              type="button"
-              title="TextAlign"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().setTextAlign('center').run()"
+          >
+            <Icon icon="ci:text-align-center" class="m-1 h-6 w-6"></Icon>
+          </button>
+          <button
+            type="button"
+            title="TextAlign"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive({ textAlign: 'right' }) ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().setTextAlign('right').run()"
-            >
-              <Icon icon="ci:text-align-right" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="HorizontalRule"
-              class="m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
-              @click="editor.chain().focus().setHorizontalRule().run()"
-            >
-              <Icon icon="bi:hr" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="BulletList"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().setTextAlign('right').run()"
+          >
+            <Icon icon="ci:text-align-right" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="HorizontalRule"
+            class="m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
+            @click="editor.chain().focus().setHorizontalRule().run()"
+          >
+            <Icon icon="bi:hr" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="BulletList"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('bulletList') ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleBulletList().run()"
-            >
-              <Icon icon="bx:list-ul" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="OrderedList"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleBulletList().run()"
+          >
+            <Icon icon="bx:list-ul" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="OrderedList"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('orderedList') ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleOrderedList().run()"
-            >
-              <Icon icon="bx:list-ol" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Blockquote"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleOrderedList().run()"
+          >
+            <Icon icon="bx:list-ol" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Blockquote"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('blockquote') ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleBlockquote().run()"
-            >
-              <Icon icon="tabler:blockquote" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Code"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleBlockquote().run()"
+          >
+            <Icon icon="tabler:blockquote" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Code"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('code') ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleCode().run()"
-            >
-              <Icon icon="bx:code" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="CodeBlock"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleCode().run()"
+          >
+            <Icon icon="bx:code" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="CodeBlock"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('codeBlock') ? 'text-blue-600' : ''} `"
-              @click="editor.chain().focus().toggleCodeBlock().run()"
-            >
-              <Icon icon="bx:code-block" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Link"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="editor.chain().focus().toggleCodeBlock().run()"
+          >
+            <Icon icon="bx:code-block" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Link"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('link') ? 'text-blue-600' : ''} `"
-              @click="setLink"
-            >
-              <Icon icon="ant-design:link-outlined" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Image"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black`"
-              @click="addImage"
-            >
-              <Icon icon="ant-design:file-image-outlined" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Table"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
+            @click="setLink"
+          >
+            <Icon icon="ant-design:link-outlined" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Image"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black`"
+            @click="addImage"
+          >
+            <Icon icon="ant-design:file-image-outlined" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Table"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black
                 ${editor.isActive('table') ? 'text-blue-600' : ''} `"
-              @click="
-                editor.chain().focus().insertTable({ rows: 4, cols: 4, withHeaderRow: true }).run()
+            @click="
+              editor.chain().focus().insertTable({ rows: 4, cols: 4, withHeaderRow: true }).run()
+            "
+          >
+            <Icon
+              :icon="
+                editor.isActive('table') ? 'fluent:table-16-regular' : 'fluent:table-add-16-regular'
               "
-            >
-              <Icon
-                :icon="
-                  editor.isActive('table')
-                    ? 'fluent:table-16-regular'
-                    : 'fluent:table-add-16-regular'
-                "
-                class="m-1 h-6 w-6"
-              ></Icon>
-            </button>
-          </li>
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              :disabled="!editor.isActive('table')"
-              title="Delete Table"
-              :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-white`"
-              @click="editor.chain().focus().deleteTable().run()"
-            >
-              <Icon icon="fluent:table-dismiss-16-regular" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-        <ul class="flex items-center justify-center px-1">
-          <li class="flex items-center justify-center">
-            <button
-              type="button"
-              title="Help"
-              class="m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
-              @click="
-                () => {
-                  // TODO: $modal.open({
-                  //   component: EditorShortcutKeysHelp,
-                  //   componentEvents: {},
-                  //   componentProps: {},
-                  // });
-                }
-              "
-            >
-              <Icon icon="bx:help-circle" class="m-1 h-6 w-6"></Icon>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
+              class="m-1 h-6 w-6"
+            ></Icon>
+          </button>
+        </li>
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            :disabled="!editor.isActive('table')"
+            title="Delete Table"
+            :class="`m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-white`"
+            @click="editor.chain().focus().deleteTable().run()"
+          >
+            <Icon icon="fluent:table-dismiss-16-regular" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="flex items-center justify-center px-1">
+        <li class="flex items-center justify-center">
+          <button
+            type="button"
+            title="Help"
+            class="m-1 flex h-8 w-8 items-center justify-center rounded transition-colors hover:bg-gray-200 hover:text-black"
+            @click="
+              () => {
+                // TODO: $modal.open({
+                //   component: EditorShortcutKeysHelp,
+                //   componentEvents: {},
+                //   componentProps: {},
+                // });
+              }
+            "
+          >
+            <Icon icon="bx:help-circle" class="m-1 h-6 w-6"></Icon>
+          </button>
+        </li>
+      </ul>
+    </header>
     <!-- WYSIWYG 本体 -->
-    <EditorContent
-      :editor="editor"
-      class="peer appearance-none rounded border border-gray-300 bg-white py-1"
-    />
+    <EditorContent :editor="editor" class="peer appearance-none py-1" />
     <!-- テーブル用のメニュー -->
     <BubbleMenu
       v-if="editor"
