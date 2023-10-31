@@ -38,6 +38,7 @@
     "@tauri-apps/cli": "^1.5.6",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "@vue/runtime-core": "^3.3.7",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "prettier-plugin-tailwindcss": "^0.5.6",

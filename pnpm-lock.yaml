@@ -85,6 +85,9 @@ devDependencies:
   '@vitejs/plugin-vue-jsx':
     specifier: ^3.0.2
     version: 3.0.2(vite@4.5.0)(vue@3.3.7)
+  '@vue/runtime-core':
+    specifier: ^3.3.7
+    version: 3.3.7
   autoprefixer:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
